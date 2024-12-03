@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+celery
+redis
+openai
+sqlalchemy
+psycopg2-binary
+python-dotenv
+requests
+slowapi
