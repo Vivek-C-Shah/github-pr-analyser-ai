@@ -1,0 +1,1 @@
+server_url = github-pr-analyser-ai-production.up.railway.app
