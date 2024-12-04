@@ -1,3 +1,6 @@
+import hashlib
+import hmac
+from fastapi import Request
 import requests
 
 def fetch_pr_files(repo_url, pr_number, github_token=None):
@@ -38,3 +41,10 @@ def process_pr_files(repo_url, pr_number, github_token=None):
 def is_code_file(filename):
     code_extensions = ['.py', '.js', '.java', '.go', '.cpp', '.c', '.cs', '.rb', '.php', '.html', '.css', '.ts', '.rs', '.kt', '.swift']
     return any(filename.endswith(ext) for ext in code_extensions)
+
+async def validate_signature(request: Request, signature: str, secret: str) -> bool:
+    if not signature:
+        return False
+    body = await request.body()
+    computed_signature = f"sha256={hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()}"
+    return hmac.compare_digest(computed_signature, signature)

@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-print(os.getenv("OPENAI_API_KEY"), "OPENAI_API_KEY")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_code_analysis_prompt(filename, content):
@@ -31,13 +30,13 @@ Code:
 def analyze_code_with_openai(filename, content):
     prompt = generate_code_analysis_prompt(filename, content)
     response = openai.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3,
     )
 
     # Debugging: Print the entire response
-    print("OpenAI API response:", response)
+    # print("OpenAI API response:", response)
 
     # Extract the assistant's message content
     response_content = response.choices[0].message.content.strip()
